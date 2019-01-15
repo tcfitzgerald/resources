@@ -10,3 +10,7 @@ Just a list of resources I wanted to keep track of.
 - [DayOne](http://dayoneapp.com/)
 - [Quiver](http://happenapps.com/#quiver)
 - [Sip](http://sipapp.io/)
+
+## Mac OS Terminal commands
+
+``pbcopy`` - ``cat file.name | pbcopy``
