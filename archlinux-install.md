@@ -60,7 +60,7 @@ swapon /dev/sda1
 
 ### install essential packages
 ```
-pacstrap /mnt base linux linux-firmware nano
+pacstrap /mnt base linux linux-firmware nano dhcpcd
 ```
 
 ### fstab
@@ -115,3 +115,6 @@ exit
 unmount -R /mnt
 reboot
 ```
+### post installation
+
+?
