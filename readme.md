@@ -10,6 +10,8 @@ Just a list of resources I wanted to keep track of.
 - [DayOne](http://dayoneapp.com/)
 - [Quiver](http://happenapps.com/#quiver)
 - [Sip](http://sipapp.io/)
+- [ArchiveBox](https://github.com/ArchiveBox/ArchiveBox)
+- [AppWrite](https://github.com/appwrite/appwrite)
 
 ## Mac OS Terminal commands
 
