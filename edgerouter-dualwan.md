@@ -19,11 +19,12 @@ The examples below will assume you are in configuration mode on your device. To 
 Configure a Basic Load-Balance Group
 Start by configuring a load-balance group on your device that will provide the parameters for how the balancing should be done. We’re going to start with a very basic configuration:
 
-set load-balance group G interface eth0
-set load-balance group G interface eth2
-set load-balance group G lb-local enable
-set load-balance group G sticky dest-addr enable
+set load-balance group G interface eth0 \
+set load-balance group G interface eth2 \
+set load-balance group G lb-local enable \
+set load-balance group G sticky dest-addr enable \
 set load-balance group G sticky source-addr enable
+
 Let’s walk through each of these with an explanation:
 
 set load-balance group G interface <interface>
@@ -42,20 +43,21 @@ set firewall group network-group PRIVATE_NETS <your LAN subnet>
 Setup Firewall Modify Rules
 Now we need to specify the policy that will cause load-balancing to occur on the interface where it is assigned. Here’s the configuration we should put in place:
 
-set firewall modify LOAD_BALANCE rule 10 action modify
-set firewall modify LOAD_BALANCE rule 10 destination group network-group PRIVATE_NETS
+set firewall modify LOAD_BALANCE rule 10 action modify \
+set firewall modify LOAD_BALANCE rule 10 destination group network-group PRIVATE_NETS \
 set firewall modify LOAD_BALANCE rule 10 modify table main
 
-set firewall modify LOAD_BALANCE rule 20 action modify
-set firewall modify LOAD_BALANCE rule 20 destination group address-group ADDRv4_eth0
+set firewall modify LOAD_BALANCE rule 20 action modify \
+set firewall modify LOAD_BALANCE rule 20 destination group address-group ADDRv4_eth0 \
 set firewall modify LOAD_BALANCE rule 20 modify table main
 
-set firewall modify LOAD_BALANCE rule 30 action modify
-set firewall modify LOAD_BALANCE rule 30 destination group address-group ADDRv4_eth2
+set firewall modify LOAD_BALANCE rule 30 action modify \
+set firewall modify LOAD_BALANCE rule 30 destination group address-group ADDRv4_eth2 \
 set firewall modify LOAD_BALANCE rule 30 modify table main
 
-set firewall modify LOAD_BALANCE rule 100 action modify
+set firewall modify LOAD_BALANCE rule 100 action modify \
 set firewall modify LOAD_BALANCE rule 100 modify lb-group G
+
 Let’s walk through each of these with an explanation:
 
 set firewall modify LOAD_BALANCE rule <number> action modify
@@ -153,17 +155,18 @@ By default, EdgeOS will ping your default gateway to determine the availability 
 Implementation
 Here are the configuration sections we’re going to add for each WAN interface:
 
-set load-balance group G interface eth0 route-test type ping target 8.8.8.8
-set load-balance group G interface eth0 route-test count failure 2
-set load-balance group G interface eth0 route-test count success 2
-set load-balance group G interface eth0 route-test initial-delay 10
+set load-balance group G interface eth0 route-test type ping target 8.8.8.8 \
+set load-balance group G interface eth0 route-test count failure 2 \
+set load-balance group G interface eth0 route-test count success 2 \
+set load-balance group G interface eth0 route-test initial-delay 10 \
 set load-balance group G interface eth0 route-test interval 10
 
-set load-balance group G interface eth2 route-test type ping target 1.1.1.1
-set load-balance group G interface eth2 route-test count failure 2
-set load-balance group G interface eth2 route-test count success 2
-set load-balance group G interface eth2 route-test initial-delay 10
+set load-balance group G interface eth2 route-test type ping target 1.1.1.1 \
+set load-balance group G interface eth2 route-test count failure 2 \
+set load-balance group G interface eth2 route-test count success 2 \
+set load-balance group G interface eth2 route-test initial-delay 10 \
 set load-balance group G interface eth2 route-test interval 10
+
 Let’s walk through each of these with an explanation:
 
 set load-balance group G interface <interface> route-test type ping target <address>
@@ -194,3 +197,5 @@ The weight above is specified as an integer representing the percentage (so 70 o
 
 Summary
 You have now completed your load-balancing configuration and the additional configuration I recommend. As mentioned in the Things That Break section in part 1, from here things become more complicated in general for how to accomplish various configurations. I fully intend to document my configurations further as I explore these challenges and learn how to properly overcome them. Thanks for your time!
+
+set load-balance group <group> flush-on-active enable
