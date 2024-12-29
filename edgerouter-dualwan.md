@@ -77,6 +77,7 @@ show load-balance watchdog
 
 You’ll receive a response similar to this:
 
+```
 Group G
   eth0
   status: OK
@@ -97,6 +98,7 @@ Group G
   ping gateway: 1.1.1.1 - REACHABLE
   last route drop   : Tue Feb  2 01:54:07 2021
   last route recover: Tue Feb  2 02:05:16 2021
+```
 From this screen, we can easily see that both of our interfaces are operational with pings running properly.
 
 Next, we’ll show the flow of traffic across the load-balancing to ensure that our traffic is actually being balanced:
@@ -104,7 +106,7 @@ Next, we’ll show the flow of traffic across the load-balancing to ensure that 
 show load-balance status
 
 You’ll receive a response similar to this:
-
+```
 Group G
     Balance Local  : true
     Lock Local DNS : false
@@ -138,6 +140,8 @@ Group G
       Local ICMP: 20001
       Local DNS : 0
       Local Data: 17728
+```
+
 Specifically, the field under flows show the traffic on each interface. In my own experience, it can take some time for the balancing to be realized because of existing sessions. I usually just check back the next day to see balancing.
 
 Summary
@@ -198,4 +202,4 @@ The weight above is specified as an integer representing the percentage (so 70 o
 Summary
 You have now completed your load-balancing configuration and the additional configuration I recommend. As mentioned in the Things That Break section in part 1, from here things become more complicated in general for how to accomplish various configurations. I fully intend to document my configurations further as I explore these challenges and learn how to properly overcome them. Thanks for your time!
 
-set load-balance group <group> flush-on-active enable
+set load-balance group <group> flush-on-active enable - from here: https://www.reddit.com/r/Ubiquiti/comments/pacb4r/edgerouter_infinity_dualwan_failoveronly/
