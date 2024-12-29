@@ -63,16 +63,25 @@ set firewall modify LOAD_BALANCE rule 100 modify lb-group G
 Let’s walk through each of these with an explanation:
 
 set firewall modify LOAD_BALANCE rule <number> action modify
+
 This instructs the rule to perform a modification on a routing table.
+
 set firewall modify LOAD_BALANCE rule <number> destination group <specification>
+
 This instructs the rule on when to be applied. In this instance, we’re saying with rules 10-30 that we want to be applied when the traffic is bound for either PRIVATE_NETS or the IPv4 address of eth0 or eth2.
+
 set firewall modify LOAD_BALANCE rule <number> modify table main
+
 This rule should modify the main routing table.
+
 set firewall modify LOAD_BALANCE rule <number> modify lb-group G
+
 After the preceeding rules, use the load-balance group G that we created earlier for the remaining traffic.
+
 At this point in time, you have a basic load-balancing configuration. You should commit the configuration at this point but you’ll likely find some odd behaviors in the future. We’ll cover additional configuration in part 2.
 
 Verify Load Balancing
+
 You can validate that your load balancing is working properly using a few commands. First, to see the general status of the interfaces and determine their status, use this command (outside of configure mode):
 
 show load-balance watchdog
@@ -151,11 +160,15 @@ You now have a functional, generic load-balancing dual-WAN configuration for you
 
 
 Configurations
+
 Warnings
+
 In my original article, I share a list of things that break when you implementing load-balancing on EdgeOS. You should have a look at these items and make an evaluation on the usefulness of this configuration based on what I share.
 
 Change Default Route-Test Behavior
+
 Background
+
 By default, EdgeOS will ping your default gateway to determine the availability of a given WAN interface. This sounds good hypothetically but, in practice, doesn’t work as well. Doing this doesn’t protect against the scenario of an upstream failure within the provider’s network (which, with Comcast, is a common problem). Instead, we want to pick a public destination that indicates that we’re ready for “common service” and test this.
 
 Implementation
