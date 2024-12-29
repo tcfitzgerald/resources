@@ -40,7 +40,9 @@ Even though we will plan to load-balance most traffic, there are certain things 
 Create a network group that represents your LAN subnet (such as 192.168.1.0/24):
 
 set firewall group network-group PRIVATE_NETS <your LAN subnet>
+
 Setup Firewall Modify Rules
+
 Now we need to specify the policy that will cause load-balancing to occur on the interface where it is assigned. Here’s the configuration we should put in place:
 
 set firewall modify LOAD_BALANCE rule 10 action modify \
