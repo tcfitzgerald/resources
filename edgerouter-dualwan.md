@@ -28,13 +28,22 @@ set load-balance group G sticky source-addr enable
 Let’s walk through each of these with an explanation:
 
 set load-balance group G interface <interface>
+
 This command is simply adding the interface to the group as a target. We’ll go back and define more here later.
+
 set load-balance group G lb-local enable
+
 This will tell our router to use this load-balance group for its own traffic as well. This ensures that things like dns-forwarding get balanced.
+
 set load-balance group G sticky <type> enable
-This set of rules (where we used dest-addr and source-addr) ensures that there is a relationship between which interface is used for traffic based on what has been sent previously. I chose to tie the dest-addr (on the Internet) and source-addr (on the LAN) together so that we could ensure that things like WebRTC will behave properly.
+
+This set of rules (where we used dest-addr and source-addr) ensures that there is a relationship between which interface is used for traffic based on what has been sent previously. I chose to tie the dest-addr (on the Internet) and source-addr (on the LAN) 
+together so that we could ensure that things like WebRTC will behave properly.
+
 Basically anything that requires you to connect to multiple ports on the same remote address (some VPNs) has the opportunity to misbehave without this.
+
 Setup Address Exclusions
+
 Even though we will plan to load-balance most traffic, there are certain things we shouldn’t plan to load-balance. Amongst those things is our LAN network.
 
 Create a network group that represents your LAN subnet (such as 192.168.1.0/24):
